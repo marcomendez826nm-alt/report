@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CyberBridge — Reportes de Ciberseguridad para la Mesa Directiva</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
+    color: #1a1a2e; background: #f8f9fa; line-height: 1.6;
+  }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+  /* Hero */
+  .hero {
+    background: linear-gradient(135deg, #0f0c29 0%, #1a1a4e 50%, #16213e 100%);
+    color: #fff; padding: 80px 0 64px; text-align: center;
+  }
+  .hero h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 16px; }
+  .hero h1 span { color: #00d4ff; }
+  .hero p { font-size: 1.2rem; opacity: .9; max-width: 700px; margin: 0 auto 32px; }
+  .hero .badge {
+    display: inline-block; background: rgba(0,212,255,.15); border: 1px solid rgba(0,212,255,.3);
+    border-radius: 100px; padding: 6px 18px; font-size: .85rem; color: #00d4ff; margin-bottom: 24px;
+  }
+  .cta-form { display: flex; gap: 12px; max-width: 500px; margin: 0 auto; flex-wrap: wrap; justify-content: center; }
+  .cta-form input {
+    flex: 1; min-width: 220px; padding: 14px 18px; border: none; border-radius: 8px;
+    font-size: 1rem; background: rgba(255,255,255,.1); color: #fff; outline: 2px solid transparent;
+    transition: .2s;
+  }
+  .cta-form input::placeholder { color: rgba(255,255,255,.5); }
+  .cta-form input:focus { outline-color: #00d4ff; background: rgba(255,255,255,.15); }
+  .cta-form button {
+    padding: 14px 32px; border: none; border-radius: 8px; background: #00d4ff;
+    color: #0f0c29; font-weight: 700; font-size: 1rem; cursor: pointer; transition: .2s;
+  }
+  .cta-form button:hover { background: #00b8d9; transform: translateY(-1px); }
+  .hero .disclaimer { font-size: .8rem; opacity: .5; margin-top: 16px; }
+
+  /* Sections */
+  section { padding: 72px 0; }
+  section h2 { font-size: 2rem; text-align: center; margin-bottom: 48px; color: #1a1a2e; }
+
+  /* Problem */
+  .problem { background: #fff; }
+  .problem-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+  .problem-grid .card {
+    background: #f8f9fa; border-radius: 12px; padding: 32px; border-left: 4px solid #e74c3c;
+  }
+  .problem-grid .card h3 { color: #e74c3c; margin-bottom: 12px; font-size: 1.3rem; }
+  .problem-grid .card ul { list-style: none; }
+  .problem-grid .card ul li { padding: 6px 0; }
+  .problem-grid .card ul li::before { content: "✗ "; color: #e74c3c; font-weight: 700; }
+  .problem-grid .solution {
+    background: #f0fdf4; border-radius: 12px; padding: 32px; border-left: 4px solid #22c55e;
+  }
+  .problem-grid .solution h3 { color: #22c55e; margin-bottom: 12px; font-size: 1.3rem; }
+  .problem-grid .solution ul { list-style: none; }
+  .problem-grid .solution ul li { padding: 6px 0; }
+  .problem-grid .solution ul li::before { content: "✓ "; color: #22c55e; font-weight: 700; }
+
+  /* How it works */
+  .how { background: #f8f9fa; }
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .step { background: #fff; border-radius: 12px; padding: 32px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,.06); }
+  .step .num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 48px; height: 48px; border-radius: 50%; background: #1a1a4e;
+    color: #fff; font-weight: 800; font-size: 1.2rem; margin-bottom: 16px;
+  }
+  .step h3 { margin-bottom: 8px; font-size: 1.15rem; }
+  .step p { font-size: .95rem; color: #555; }
+
+  /* Audience */
+  .audience { background: #fff; }
+  .audience-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .persona { text-align: center; padding: 32px 16px; border-radius: 12px; background: #f8f9fa; }
+  .persona .icon { font-size: 2.5rem; margin-bottom: 12px; }
+  .persona h3 { margin-bottom: 8px; }
+  .persona p { font-size: .9rem; color: #555; }
+
+  /* Comparison */
+  .compare { background: #f8f9fa; }
+  .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .compare-card { border-radius: 12px; padding: 32px; background: #fff; }
+  .compare-card.tech { border-top: 4px solid #e74c3c; }
+  .compare-card.biz { border-top: 4px solid #22c55e; }
+  .compare-card h3 { margin-bottom: 16px; }
+  .compare-card h3 span { display: block; font-size: .85rem; font-weight: 400; opacity: .6; }
+  .compare-card ul { list-style: none; }
+  .compare-card ul li { padding: 6px 0; font-size: .95rem; }
+  .compare-card.tech ul li::before { content: "✗ "; color: #e74c3c; font-weight: 700; }
+  .compare-card.biz ul li::before { content: "✓ "; color: #22c55e; font-weight: 700; }
+
+  /* Example */
+  .example { background: #fff; }
+  .example-box {
+    background: #f8f9fa; border-radius: 12px; padding: 32px; max-width: 750px; margin: 0 auto;
+    font-size: .95rem;
+  }
+  .example-box .tag {
+    display: inline-block; background: #e74c3c; color: #fff; font-size: .75rem; font-weight: 700;
+    padding: 3px 10px; border-radius: 100px; margin-bottom: 8px;
+  }
+  .example-box .tag.biz { background: #22c55e; }
+  .example-box h4 { margin: 16px 0 8px; font-size: 1rem; }
+  .example-box .tech-text { color: #666; font-family: monospace; font-size: .85rem; background: #eee; padding: 12px; border-radius: 8px; }
+  .example-box .biz-text { color: #1a1a2e; background: #f0fdf4; padding: 12px; border-radius: 8px; border-left: 3px solid #22c55e; }
+
+  /* Form */
+  .signup { background: linear-gradient(135deg, #0f0c29, #1a1a4e); color: #fff; text-align: center; padding: 64px 0; }
+  .signup h2 { color: #fff; }
+  .signup p { opacity: .8; margin-bottom: 32px; }
+  .signup .cta-form input { background: rgba(255,255,255,.12); }
+  .signup .cta-form input:focus { background: rgba(255,255,255,.18); }
+  .signup .count {
+    margin-top: 24px; font-size: .9rem; opacity: .5;
+  }
+
+  /* Footer */
+  footer { text-align: center; padding: 32px 0; font-size: .85rem; color: #888; }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .hero h1 { font-size: 1.8rem; }
+    .problem-grid, .steps, .audience-grid, .compare-grid { grid-template-columns: 1fr; }
+    .cta-form input { min-width: 100%; }
+    .cta-form button { width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="container">
+    <div class="badge">🚀 Lanzamiento — Acceso Temprano</div>
+    <h1>Traducimos <span>ciberseguridad</span> a lenguaje de negocio</h1>
+    <p>Convierte reportes técnicos de BloodHound, Nessus, Nmap y pentests en reportes ejecutivos que tu CEO, CFO y junta directiva entenderán — y actuarán.</p>
+    <form class="cta-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+      <input type="email" name="email" placeholder="tu@email.com" required>
+      <button type="submit">Quiero acceso temprano</button>
+    </form>
+    <p class="disclaimer">Sin spam. Sin compartir tu correo. 1 email mensual como máximo.</p>
+  </div>
+</section>
+
+<!-- Problem -->
+<section class="problem" id="problema">
+  <div class="container">
+    <h2>El problema que resolvemos</h2>
+    <div class="problem-grid">
+      <div class="card">
+        <h3>Reportes técnicos que nadie lee</h3>
+        <ul>
+          <li>El CEO recibe 200 páginas de logs y exploits</li>
+          <li>El CFO no puede justificar el presupuesto de seguridad</li>
+          <li>La junta directiva no entiende el riesgo real</li>
+          <li>Los hallazgos críticos quedan sin presupuesto por meses</li>
+        </ul>
+      </div>
+      <div class="solution">
+        <h3>Reportes ejecutivos que impulsan acción</h3>
+        <ul>
+          <li>Cada hallazgo con impacto económico estimado</li>
+          <li>Tiempo de remediación en horas, no en jerga técnica</li>
+          <li>Priorización tipo CEO: "¿Qué me cuesta más no arreglar?"</li>
+          <li>Idioma: negocio, no tecnología</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- How it works -->
+<section class="how" id="como-funciona">
+  <div class="container">
+    <h2>Cómo funciona</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="num">1</div>
+        <h3>Sube tu reporte técnico</h3>
+        <p>BloodHound, Nessus, Nmap, Metasploit, o cualquier pentest en PDF, JSON o HTML.</p>
+      </div>
+      <div class="step">
+        <div class="num">2</div>
+        <h3>Procesamos con IA especializada</h3>
+        <p>Nuestro prompt propietario traduce cada hallazgo a: gravedad, impacto económico, tiempo de reparación y riesgo de negocio.</p>
+      </div>
+      <div class="step">
+        <div class="num">3</div>
+        <h3>Recibe tu reporte ejecutivo</h3>
+        <p>PDF listo para presentar al board. Sin jerga. Sin tecnicismos. Con acciones concretas y priorizadas.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Audience -->
+<section class="audience" id="para-quien">
+  <div class="container">
+    <h2>¿Para quién es?</h2>
+    <div class="audience-grid">
+      <div class="persona">
+        <div class="icon">🏢</div>
+        <h3>CEO / Junta Directiva</h3>
+        <p>Entiende el riesgo real de ciberseguridad sin necesitar un doctorado en tecnología.</p>
+      </div>
+      <div class="persona">
+        <div class="icon">💰</div>
+        <h3>CFO / Finanzas</h3>
+        <p>Justifica inversiones en seguridad con datos de impacto económico, no con miedo.</p>
+      </div>
+      <div class="persona">
+        <div class="icon">🛡️</div>
+        <h3>CISO / Consultor</h3>
+        <p>Entrega reportes que tus clientes realmente valoran y entienden. Diferénciate de la competencia.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Example -->
+<section class="example" id="ejemplo">
+  <div class="container">
+    <h2>Ejemplo real</h2>
+    <div class="example-box">
+      <span class="tag">HALLAZGO TÉCNICO (BloodHound)</span>
+      <div class="tech-text">"User@DOMAIN has GenericAll privilege over DC01 via group membership in DOMAIN ADMINS. Abuse: Kerberoasting, DCSync, Skeleton Key."</div>
+
+      <h4>⬇️ Se convierte en ⬇️</h4>
+
+      <span class="tag biz">HALLAZGO DE NEGOCIO</span>
+      <div class="biz-text">
+        <strong>🔴 Crítico · Usuario no administrativo con control total del dominio</strong><br><br>
+        Un empleado sin permisos especiales tiene, a través de su pertenencia a un grupo, acceso para modificar cualquier cuenta en su red corporativa. Esto significa que puede: leer todos los correos electrónicos de la empresa, acceder a archivos financieros, o incluso desbloquear la cuenta del CEO para suplantarlo.<br><br>
+        <strong>Impacto económico estimado:</strong> $500,000 – $2,000,000<br>
+        <strong>Tiempo de reparación:</strong> 2 horas<br>
+        <strong>Acción:</strong> Remover a este usuario del grupo "Domain Admins" y asignarle solo los permisos que necesita para su rol.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Comparison -->
+<section class="compare">
+  <div class="container">
+    <h2>Reporte técnico vs. Reporte ejecutivo</h2>
+    <div class="compare-grid">
+      <div class="compare-card tech">
+        <h3>Reporte típico <span>(lo que recibes hoy)</span></h3>
+        <ul>
+          <li>CVSS scores que nadie interpreta</li>
+          <li>Logs de exploits y comandos</li>
+          <li>Cientos de páginas sin priorización</li>
+          <li>Jerga: Kerberoasting, DCSync, ACL, SIDHistory</li>
+          <li>Sin traducción a impacto de negocio</li>
+        </ul>
+      </div>
+      <div class="compare-card biz">
+        <h3>Reporte CyberBridge <span>(lo que necesitas)</span></h3>
+        <ul>
+          <li>Gravedad: Crítico / Alto / Medio / Bajo</li>
+          <li>Impacto económico estimado por hallazgo</li>
+          <li>Tiempo de reparación en horas-persona</li>
+          <li>Analogías de negocio: "es como dejar la puerta abierta"</li>
+          <li>Priorización: "esto primero porque cuesta más no arreglarlo"</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Signup -->
+<section class="signup" id="registro">
+  <div class="container">
+    <h2>Acceso temprano</h2>
+    <p>Sé de los primeros en probar CyberBridge. Los primeros 10 registros recibirán 3 reportes ejecutivos gratis.</p>
+    <form class="cta-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+      <input type="email" name="email" placeholder="tu@email.com" required>
+      <button type="submit">Quiero acceso temprano</button>
+    </form>
+    <p class="count">📊 0 personas registradas — ¡Sé el primero!</p>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    CyberBridge — De reportes técnicos a decisiones de negocio.
+  </div>
+</footer>
+
+</body>
+</html>
